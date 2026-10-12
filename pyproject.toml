@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loopguard"
+version = "0.1.0"
+description = "Semantic loop detection for ReAct agents: catch the same thought in different words, plus cost-justified iteration budgets"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Habib Ur Rehman" }]
+keywords = ["agents", "react", "loop-detection", "observability", "llm"]
+dependencies = ["numpy", "scikit-learn"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/habib-analyst/loopguard"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,30 @@
+{
+  "clean": {
+    "guarded": {
+      "success": true,
+      "steps": 4,
+      "revisits": 0,
+      "reflections": 0,
+      "termination": "task solved"
+    },
+    "naive": {
+      "success": true,
+      "steps": 4
+    }
+  },
+  "loop": {
+    "guarded": {
+      "success": false,
+      "steps": 11,
+      "revisits": 3,
+      "reflections": 3,
+      "termination": "budget exhausted: expected marginal gain 0.020 below cost 1.0 for 3 consecutive steps; continuation not cost-justified"
+    },
+    "naive": {
+      "success": false,
+      "steps": 25
+    }
+  },
+  "budget_saved_on_doomed_task": 14,
+  "budget_saved_pct": 56.0
+}
