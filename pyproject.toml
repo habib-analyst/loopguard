@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "loopguard"
-version = "0.1.0"
-description = "Semantic loop detection for ReAct agents: catch the same thought in different words, plus cost-justified iteration budgets"
+version = "0.2.0"
+description = "Semantic loop detection for ReAct agents: catch the same thought in different words, recover with a reflect/switch/restrict/handoff ladder, plus cost-justified iteration budgets"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

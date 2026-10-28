@@ -1,0 +1,1067 @@
+{
+  "suite": {
+    "n_scenarios": 28,
+    "n_looping": 20,
+    "n_clean": 8,
+    "task_types": [
+      "code_debug",
+      "data_query",
+      "file_retrieval",
+      "web_search"
+    ]
+  },
+  "calibrated_threshold": 0.3,
+  "calibration_f1": 1.0,
+  "summary": {
+    "v1": {
+      "loop_completion": 0.35,
+      "loop_successes": 7,
+      "clean_completion": 1.0,
+      "clean_false_positive_flags": 0,
+      "mean_steps_loop": 7.1
+    },
+    "detect_only": {
+      "loop_completion": 0.0,
+      "loop_successes": 0,
+      "clean_completion": 1.0,
+      "clean_false_positive_flags": 0,
+      "mean_steps_loop": 2.2
+    },
+    "v2": {
+      "loop_completion": 0.8,
+      "loop_successes": 16,
+      "clean_completion": 1.0,
+      "clean_false_positive_flags": 0,
+      "mean_steps_loop": 9.9
+    }
+  },
+  "delta_pp_v2_minus_v1_loop": 45.0,
+  "unrecoverable_handoffs_v2": "4/4",
+  "v2_rung_usage": {
+    "reflect": 60,
+    "reflect_retry": 25,
+    "strategy_switch": 24,
+    "tool_restriction": 8,
+    "handoff": 4
+  },
+  "bars": {
+    "B1_delta_pp_v2_minus_v1_loop": 45.0,
+    "B1_pass": true,
+    "B2_clean_fp_zero_v1": true,
+    "B2_clean_fp_zero_v2": true,
+    "B3_v2_clean_complete": true,
+    "all_pass": true
+  },
+  "rows": [
+    {
+      "scenario": "web_search:reflect",
+      "task_type": "web_search",
+      "kind": "loop",
+      "variant": "reflect",
+      "v1": {
+        "success": true,
+        "steps": 5,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 5,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 1,
+        "termination": "task solved",
+        "rungs": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "scenario": "web_search:reflect_retry",
+      "task_type": "web_search",
+      "kind": "loop",
+      "variant": "reflect_retry",
+      "v1": {
+        "success": true,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 1,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect"
+        ]
+      }
+    },
+    {
+      "scenario": "web_search:switch",
+      "task_type": "web_search",
+      "kind": "loop",
+      "variant": "switch",
+      "v1": {
+        "success": false,
+        "steps": 6,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 2,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch"
+        ]
+      }
+    },
+    {
+      "scenario": "web_search:restrict",
+      "task_type": "web_search",
+      "kind": "loop",
+      "variant": "restrict",
+      "v1": {
+        "success": false,
+        "steps": 6,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 12,
+        "flags": 4,
+        "handed_off": false,
+        "max_rung": 3,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "tool_restriction"
+        ]
+      }
+    },
+    {
+      "scenario": "web_search:unrecoverable",
+      "task_type": "web_search",
+      "kind": "loop",
+      "variant": "unrecoverable",
+      "v1": {
+        "success": false,
+        "steps": 6,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": false,
+        "steps": 10,
+        "flags": 5,
+        "handed_off": true,
+        "max_rung": 4,
+        "termination": "handoff: recovery ladder exhausted (reflect, strategy_switch, tool_restriction all failed to break the loop); handing off to a human with a trace packet",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "tool_restriction",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "handoff"
+        ]
+      }
+    },
+    {
+      "scenario": "web_search:progress",
+      "task_type": "web_search",
+      "kind": "clean",
+      "variant": "progress",
+      "v1": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "v2": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved",
+        "rungs": []
+      }
+    },
+    {
+      "scenario": "web_search:progress_retry",
+      "task_type": "web_search",
+      "kind": "clean",
+      "variant": "progress_retry",
+      "v1": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "v2": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved",
+        "rungs": []
+      }
+    },
+    {
+      "scenario": "code_debug:reflect",
+      "task_type": "code_debug",
+      "kind": "loop",
+      "variant": "reflect",
+      "v1": {
+        "success": true,
+        "steps": 5,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 5,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 1,
+        "termination": "task solved",
+        "rungs": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "scenario": "code_debug:reflect_retry",
+      "task_type": "code_debug",
+      "kind": "loop",
+      "variant": "reflect_retry",
+      "v1": {
+        "success": true,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 1,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect"
+        ]
+      }
+    },
+    {
+      "scenario": "code_debug:switch",
+      "task_type": "code_debug",
+      "kind": "loop",
+      "variant": "switch",
+      "v1": {
+        "success": false,
+        "steps": 6,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 2,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch"
+        ]
+      }
+    },
+    {
+      "scenario": "code_debug:restrict",
+      "task_type": "code_debug",
+      "kind": "loop",
+      "variant": "restrict",
+      "v1": {
+        "success": false,
+        "steps": 6,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 12,
+        "flags": 4,
+        "handed_off": false,
+        "max_rung": 3,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "tool_restriction"
+        ]
+      }
+    },
+    {
+      "scenario": "code_debug:unrecoverable",
+      "task_type": "code_debug",
+      "kind": "loop",
+      "variant": "unrecoverable",
+      "v1": {
+        "success": false,
+        "steps": 6,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": false,
+        "steps": 10,
+        "flags": 5,
+        "handed_off": true,
+        "max_rung": 4,
+        "termination": "handoff: recovery ladder exhausted (reflect, strategy_switch, tool_restriction all failed to break the loop); handing off to a human with a trace packet",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "tool_restriction",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "handoff"
+        ]
+      }
+    },
+    {
+      "scenario": "code_debug:progress",
+      "task_type": "code_debug",
+      "kind": "clean",
+      "variant": "progress",
+      "v1": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "v2": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved",
+        "rungs": []
+      }
+    },
+    {
+      "scenario": "code_debug:progress_retry",
+      "task_type": "code_debug",
+      "kind": "clean",
+      "variant": "progress_retry",
+      "v1": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "v2": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved",
+        "rungs": []
+      }
+    },
+    {
+      "scenario": "data_query:reflect",
+      "task_type": "data_query",
+      "kind": "loop",
+      "variant": "reflect",
+      "v1": {
+        "success": true,
+        "steps": 6,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 3,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 6,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 1,
+        "termination": "task solved",
+        "rungs": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "scenario": "data_query:reflect_retry",
+      "task_type": "data_query",
+      "kind": "loop",
+      "variant": "reflect_retry",
+      "v1": {
+        "success": false,
+        "steps": 7,
+        "flags": 2,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 0.68) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 3,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 10,
+        "flags": 2,
+        "handed_off": false,
+        "max_rung": 1,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect_retry"
+        ]
+      }
+    },
+    {
+      "scenario": "data_query:switch",
+      "task_type": "data_query",
+      "kind": "loop",
+      "variant": "switch",
+      "v1": {
+        "success": false,
+        "steps": 7,
+        "flags": 2,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 0.68) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 3,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 10,
+        "flags": 2,
+        "handed_off": false,
+        "max_rung": 2,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch"
+        ]
+      }
+    },
+    {
+      "scenario": "data_query:restrict",
+      "task_type": "data_query",
+      "kind": "loop",
+      "variant": "restrict",
+      "v1": {
+        "success": false,
+        "steps": 7,
+        "flags": 2,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 0.68) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 3,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 13,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 3,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "tool_restriction"
+        ]
+      }
+    },
+    {
+      "scenario": "data_query:unrecoverable",
+      "task_type": "data_query",
+      "kind": "loop",
+      "variant": "unrecoverable",
+      "v1": {
+        "success": false,
+        "steps": 7,
+        "flags": 2,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 0.68) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 3,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": false,
+        "steps": 11,
+        "flags": 4,
+        "handed_off": true,
+        "max_rung": 4,
+        "termination": "handoff: recovery ladder exhausted (reflect, strategy_switch, tool_restriction all failed to break the loop); handing off to a human with a trace packet",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "tool_restriction",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "handoff"
+        ]
+      }
+    },
+    {
+      "scenario": "data_query:progress",
+      "task_type": "data_query",
+      "kind": "clean",
+      "variant": "progress",
+      "v1": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "v2": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved",
+        "rungs": []
+      }
+    },
+    {
+      "scenario": "data_query:progress_retry",
+      "task_type": "data_query",
+      "kind": "clean",
+      "variant": "progress_retry",
+      "v1": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "v2": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved",
+        "rungs": []
+      }
+    },
+    {
+      "scenario": "file_retrieval:reflect",
+      "task_type": "file_retrieval",
+      "kind": "loop",
+      "variant": "reflect",
+      "v1": {
+        "success": true,
+        "steps": 5,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 5,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 1,
+        "termination": "task solved",
+        "rungs": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "scenario": "file_retrieval:reflect_retry",
+      "task_type": "file_retrieval",
+      "kind": "loop",
+      "variant": "reflect_retry",
+      "v1": {
+        "success": true,
+        "steps": 12,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 12,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 1,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect"
+        ]
+      }
+    },
+    {
+      "scenario": "file_retrieval:switch",
+      "task_type": "file_retrieval",
+      "kind": "loop",
+      "variant": "switch",
+      "v1": {
+        "success": false,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 12,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 2,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch"
+        ]
+      }
+    },
+    {
+      "scenario": "file_retrieval:restrict",
+      "task_type": "file_retrieval",
+      "kind": "loop",
+      "variant": "restrict",
+      "v1": {
+        "success": false,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": true,
+        "steps": 15,
+        "flags": 4,
+        "handed_off": false,
+        "max_rung": 3,
+        "termination": "task solved",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "tool_restriction"
+        ]
+      }
+    },
+    {
+      "scenario": "file_retrieval:unrecoverable",
+      "task_type": "file_retrieval",
+      "kind": "loop",
+      "variant": "unrecoverable",
+      "v1": {
+        "success": false,
+        "steps": 9,
+        "flags": 3,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "terminated: reflection proposed a strategy too similar (max sim 1.00) to a failed one; refusing to re-loop"
+      },
+      "detect_only": {
+        "success": false,
+        "steps": 2,
+        "flags": 1,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "detect-only: terminated at first revisit"
+      },
+      "v2": {
+        "success": false,
+        "steps": 14,
+        "flags": 5,
+        "handed_off": true,
+        "max_rung": 4,
+        "termination": "handoff: recovery ladder exhausted (reflect, strategy_switch, tool_restriction all failed to break the loop); handing off to a human with a trace packet",
+        "rungs": [
+          "reflect",
+          "reflect",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "tool_restriction",
+          "reflect",
+          "reflect_retry",
+          "strategy_switch",
+          "handoff"
+        ]
+      }
+    },
+    {
+      "scenario": "file_retrieval:progress",
+      "task_type": "file_retrieval",
+      "kind": "clean",
+      "variant": "progress",
+      "v1": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "v2": {
+        "success": true,
+        "steps": 3,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved",
+        "rungs": []
+      }
+    },
+    {
+      "scenario": "file_retrieval:progress_retry",
+      "task_type": "file_retrieval",
+      "kind": "clean",
+      "variant": "progress_retry",
+      "v1": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "detect_only": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved"
+      },
+      "v2": {
+        "success": true,
+        "steps": 4,
+        "flags": 0,
+        "handed_off": false,
+        "max_rung": 0,
+        "termination": "task solved",
+        "rungs": []
+      }
+    }
+  ],
+  "note": "threshold calibrated once on uncontrolled trajectories and frozen for all arms; budgets identical across arms (max_steps=40, patience=99); agents scripted/deterministic"
+}

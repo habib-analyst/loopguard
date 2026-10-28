@@ -43,3 +43,27 @@ Action-hash loop detection is standard practitioner knowledge: hashing recent ac
 ## 5. Kill-gate verdict
 
 **PASS.** Semantic detection beats action-hash F1 by +21.7pp on held-out trajectories (bar: +10pp), robust across seeds. The observation-gate design (outcome classes, not token overlap) was validated by ablation during development: token-Jaccard gating blocked nearly all true loops.
+
+---
+
+## v2 addendum: the recovery ladder (2026-10-28)
+
+**Gap.** v1 answers "is the agent looping?" but its post-detection policy is brittle: reflections are the only recovery mechanism, a rejected (copycat) reflection terminates the run, and at most 3 reflections are attempted. Detection without recovery leaves rescuable agents dead.
+
+**Method.** `RecoveringLoop` keeps v1's detector and budget untouched and replaces the post-detection policy with a ladder climbed at every detection: (1) reflect, with bounded annotated retries when a proposal is rejected as too similar to a failed strategy; (2) strategy_switch, a dedicated callable whose proposal must come from a different strategy family and pass the same dissimilarity check; (3) tool_restriction — tools appearing in the detected loop window are restricted for the rest of the run, their actions intercepted before the environment is called; (4) handoff, a stub that terminates with a structured trace packet (not counted as completion). Escalation across detections is carried by persistent state: the failed-strategy set and the restricted-tool set only grow. One v1 behaviour matters for interpretation: the first reflection is never dissimilarity-checked (the failed set is empty), in both arms.
+
+**Experiment (pre-registered, PREREG.md).** 28 deterministic scripted scenarios: 4 task types (web search, code debug, data query, file retrieval) × 5 looping variants (reflect / reflect-retry / switch / restrict / unrecoverable) + 2 clean variants (progress / progress-with-legit-retry). Each looping variant encodes which rung a recovery *should* need, via the proposals the agent's reflect/switch callables return and which strategies actually work in its environment. Arms: v1 ReActLoop (unmodified), detect-only (terminate at first revisit), v2 RecoveringLoop. One detector threshold calibrated on uncontrolled trajectories (0.30, calibration F1 1.000) and frozen; identical budgets (max 40 steps, patience 99).
+
+**Results.**
+
+| arm | looping completion | clean completion | clean FP flags | mean steps (looping) |
+|---|---|---|---|---|
+| detect-only | 0/20 (0%) | 8/8 | 0 | 2.2 |
+| v1 | 7/20 (35%) | 8/8 | 0 | 7.1 |
+| v2 | 16/20 (80%) | 8/8 | 0 | 9.9 |
+
+Δ v2 − v1 = **+45.0pp** (pre-registered bar +30pp: PASS). Clean false positives 0 in both guarded arms (bar 0: PASS); v2 clean completion 8/8 (bar: PASS). Per variant (v2 vs v1): reflect 4/4 vs 4/4; reflect-retry 4/4 vs 3/4 — v1 recovered three of these because the second paraphrase happened to fall below the 0.55 dissimilarity bar, letting v1 reach the working proposal within its 3-reflection cap; the fourth (data_query) rejected and terminated exactly as designed; switch 4/4 vs 0/4; restrict 4/4 vs 0/4; unrecoverable 0/4 vs 0/4, with v2 handing off gracefully in 4/4 (structured packet) where v1 terminated bare. v2 rung usage across the suite: 60 reflect proposals, 25 reflect retries, 24 switch proposals, 8 restrictions, 4 handoffs.
+
+**Cost honesty.** The ladder is not free: on looping scenarios v2 spends a mean 9.9 steps vs v1's 7.1. It buys +45pp completion and graceful handoffs with those steps; on clean scenarios it spends exactly what v1 spends (3–4 steps, no detections, no recovery actions).
+
+**Limitations.** Scripted agents with enumerable strategy sets; a live LLM's reflect() may produce copycats that TF-IDF similarity scores as novel (the ladder then wastes rungs) or novel strategies it over-rejects. Environments are synthetic; "works" is binary per strategy. The handoff rung emits a packet only. Detection itself is unchanged from v1, including its limitations.
